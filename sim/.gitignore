@@ -1,0 +1,9 @@
+transcript
+*.cr.mti
+vsim.wlf
+work
+Makefile
+modelsim.ini
+wlft*
+*~
+*.mpf

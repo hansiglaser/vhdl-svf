@@ -1,0 +1,25 @@
+! Set TCK frequency to 1MHz
+FREQUENCY 1.0E6 HZ;
+! Go to known state
+STATE RESET;
+! Run in Run-Test/Idle for 1000 TCKs, then go to Pause-DR.
+RUNTEST 1000 TCK ENDSTATE DRPAUSE;
+! Go back to Run-Test/Idle for 20 SCKs, then go to Pause-DR.
+RUNTEST 20 SCK;
+! Run in Run-Test/Idle for 1000 TCKs or at least 1 ms,
+! then go to Pause-DR.
+RUNTEST 1000 TCK 0.001 SEC;
+! Run in Run-Test/Idle for at least one millisecond and at most
+! 50 milliseconds, then remain in Run-Test/Idle.
+RUNTEST 10.0E-3 SEC MAXIMUM 50.0E-3 SEC ENDSTATE IDLE;
+! Run in Pause-DR for at least 50 ms, then go to Run-Test/Idle.
+RUNTEST DRPAUSE 50E-3 SEC ENDSTATE IDLE;
+! Run in Pause-DR for at least 1 ms, then go to Run-Test/Idle.
+RUNTEST 0.001 SEC;
+! Run in Run-Test/Idle for at least 10 ms, then remain in
+! Run-Test/Idle.
+RUNTEST IDLE 1E-2 SEC;
+! Run in Run-Test/Idle for 2000 TCK but not longer als 1.5ms, then remain in
+! Run-Test/Idle. This should give a warning that the specified number of TCK
+! cycles cannot be reached due to the maximum time.
+RUNTEST 2000 TCK 1.0E-3 SEC MAXIMUM 1.5E-3 SEC;

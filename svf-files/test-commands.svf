@@ -1,0 +1,31 @@
+//////////////////////////////////////////////////////////////////////////////
+// SVF Test Program //////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// Test comment with a pair of slashes '//'
+! Test comment with an exclamation point '!'
+! Begin Test Program
+TRST OFF;                                    ! Disable Test Reset line
+ENDIR IDLE;                                  ! End IR scans in IDLE
+ENDDR IDLE;                                  ! End DR scans in IDLE
+FREQUENCY 1.0E6 HZ;                          ! Set frequency to 1MHz
+FREQUENCY;                                   ! Return to implementation defined default frequency
+STATE RESET;                                 ! Go to initial stable state
+HIR  8 TDI (83);                             ! 8-bit IR header
+HDR 16 TDI (FFFF);! TDO (FFFF) MASK (FFFF);  ! 16-bit DR header
+TIR 16 TDI (0000);                           ! 16-bit IR trailer
+TDR  8 TDI (12);                             ! 16-bit DR trailer
+SIR  8 TDI (41);                             ! 8-bit IR scan
+SDR 32 TDI (ABCD1234) TDO (11112222);        ! 32-bit DR scan
+STATE DRPAUSE;                               ! Go to stable state DRPAUSE
+STATE DREXIT2 DRUPDATE DRSELECT IRSELECT IRCAPTURE IREXIT1 IRPAUSE; ! walk through JTAG state machine
+STATE DRPAUSE;                               ! Go to stable state DRPAUSE
+RUNTEST 100 TCK ENDSTATE IRPAUSE;            ! RUNBIST for 100 TCKs, then go to stable state IRPAUSE
+PIOMAP (IN  STROBE                           ! setup parallel IO mapping (must be before PIO!)
+        IN  ALE
+        OUT DISABLE
+        OUT ENABLE
+        OUT CLEAR
+        IN  SET);
+PIO (HLUDXZ);                                ! specify parallel test vector
+ENDIR IDLE;
+! End Test Program
