@@ -46,4 +46,4 @@ Directory Structure
 Further Documentation
 ---------------------
 
-See the header of `vhdl/svf-p.vhd <blob/master/vhdl/svf-p.vhd>`_ for all further documentation.
+See the header of `vhdl/svf-p.vhd <vhdl-svf/blob/master/vhdl/svf-p.vhd>`_ for all further documentation.
